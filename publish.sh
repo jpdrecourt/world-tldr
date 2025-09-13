@@ -3,7 +3,7 @@
 # World TLDR Publishing Script
 # Archives current version and publishes new files
 
-set -e  # Exit on any error
+# set -e  # Exit on any error
 
 # Colors for output
 GREEN='\033[0;32m'
@@ -62,22 +62,24 @@ echo -e "${YELLOW}Step 2: Moving root files to current/...${NC}"
 
 moved_files=0
 # Move digest files
-for file in world-tldr-[0-9][0-9][0-9][0-9].md; do
+for file in world-tldr-*.md; do
+    echo "$file"
     if [ -f "$file" ]; then
         mv "$file" current/
         echo "  ✓ Moved $file to current/"
         ((moved_files++))
     fi
+    echo "Outside if"
 done
 
-# Move trends files  
-for file in world-tldr-trends-[0-9][0-9][0-9][0-9].md; do
-    if [ -f "$file" ]; then
-        mv "$file" current/
-        echo "  ✓ Moved $file to current/"
-        ((moved_files++))
-    fi
-done
+# # Move trends files  
+# for file in world-tldr-trends-[0-9][0-9][0-9][0-9].md; do
+#     if [ -f "$file" ]; then
+#         mv "$file" current/
+#         echo "  ✓ Moved $file to current/"
+#         ((moved_files++))
+#     fi
+# done
 
 if [ $moved_files -eq 0 ]; then
     echo "  ! No world-tldr-*.md files found in root directory"
